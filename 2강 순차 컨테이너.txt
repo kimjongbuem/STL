@@ -1,0 +1,12 @@
+array>
+at method : 해당 원소의 인덱스가 정확한지 검사하는 함수.
+size : 배열개수
+begin, end 멤버 정의는 반복자를 만들어서 돌림.
+비교연산시 모든 연산이 같아야만 true
+
+vector>
+크기가 자동으로 커진다는 차이점이 존재.
+reverse : 메모리 20저장 할당 이 전에 사용한 반복자는 쓸수없으니 다시 생성해야함.
+capacity, size는 다르다. 용량과 크기의 차이점. 
+원소추가시 push_back , insert, emplace, emplace_back을 사용해야함.
+원소반환 : front, back() 

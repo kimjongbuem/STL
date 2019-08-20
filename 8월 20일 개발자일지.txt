@@ -1,0 +1,13 @@
+내가 오늘한건 싱글턴 패턴 복습, 스마트포인터에 대한 고찰.
+
+몬테카를로 알고리즘>
+어떤 값을 계산할 때 난수를 이용하여 확률적계산을 하는 알고리즘.
+MCTS 4 COURSE>
+Selection, Expansion Simulation, Backprogagation
+Selection : 현재까지의 Tree 중 어떤 leaf를 고르는 것임. 
+Expantion : 그 leat에 대해 자식 노드를 만드는 과정임
+Simualtion : 자식 노드에 대해 랜덤 시뮬레이션을 하는것
+Backpropagation은 시뮬레이션 결과를 root노드에 전달하는 과정임.
+
+자바>
+쓰레드, 자료구조, 스트림 사용이 기억이안나니 복습ㄱㄱ
