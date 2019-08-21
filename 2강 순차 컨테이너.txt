@@ -10,3 +10,82 @@ reverse : 메모리 20저장 할당 이 전에 사용한 반복자는 쓸수없으니 다시 생성해야함.
 capacity, size는 다르다. 용량과 크기의 차이점. 
 원소추가시 push_back , insert, emplace, emplace_back을 사용해야함.
 원소반환 : front, back() 
+
+copy(input iterator(isstream_iterater) - start, (input iterator(isstream_iterater) - end,outStream_iterator); 
+Copy range of elements
+Copies the elements in the range [first,last) into the range beginning at result.
+
+벡터컨테이너 새원소 추가하기.
+push_back- > emplace_back(객체의 이동연산 제거).
+insert 여러가지 종류가 있다 쓸때 참고하도록
+삭제 
+clear, pop_back() 
+shrink_to_fit 멤버를 호출해서 원소에 필요한 크기로 줄일수 있음..
+erase -> size 감소 but capacity 변하지않음.
+
+또한 벡터의 용량(capacity)는 사이즈가 capacity를 넘었을 때 2배로 증가하기 때문에 많은 메모리가 사용될수 있으니 제한할 경우도 존재한다.
+if(vector.size() == vector.capacity()) vector.reverse(vector.size() * 1.3) // 이렇게하면 1.3배가 되니 제한이 가능함.
+
+
+Deque>
+왜사용? vector보다 순차열의 시작이나 끝에 객체들을 효율적으로 추가하거나 삭제할 수 있다는 점, 선입선출. 
+디큐는 양끝원소 0 , end지점 옆에(물론 0은 왼쪽 end는 오른쪽) 추가가능하다.
+size == capacity는 항상같다 !! 
+push_back, pop_back , push_front, push_back
+
+assign 메서드는 컨테이너의 내용을 대체한다.
+
+1. 새로운 내용을 초기화리스트에 채우는 버전, 2. 새로운 내용을 반복자로 지정한 범위로 채우는 버전, 
+3. 새로운 내용을 특정 객체의 복제본으로 채우기
+range (1)	
+template <class InputIterator>
+  void assign (InputIterator first, InputIterator last);
+fill (2)	
+void assign (size_type n, const value_type& val);
+initializer list (3)	
+void assign (initializer_list<value_type> il);
+
+
+list<T>
+이중연결리스트를 구현한것, list는 어느위치라도 상수시간(n)에 집어넣거나 뺄 수 있는 장점이 있으나 검색이 매우오래걸리기때문에 많은 양의 검색을 해야한다면 비추.(인덱스불가)
+size()- > resize()시 인수가 원소 개수보다 작다면 끝에 있는 원소들로부터 삭제됨
+
+clear, erase
+erase))))
+
+basic_string& erase(size_type index = 0, size_type count = npos);  // (1)
+iterator erase(const_iterator position);                           // (2)
+iterator erase(const_iterator first, const_iterator last);         // (3)
+string 에서 원하는 범위의 문자들을 삭제한다.
+
+첫번째 버전의 경우 index 로 부터, count 개의 문자들을 지운다. (substr 랑 비슷하다고 생각하면 된다.) 만일 count 가 문자열 끝을 넘어간다면, 그 이상 지우지 않는다.
+
+position 위치에 있는 문자를 지운다.
+
+first 부터 last 전 까지의 문자들을 지운다
+
+remove_if(함수포인터 or 람다식) 
+remove(인수) : 인수와 일치하는 원소 제거
+merge, sort, splice 그 중 splcie는 특정위치에 잘라서 붙이는 위치 splice(넣을 컨테이너 반복자 위치, 줄 컨테이너, 줄 컨테이너 반복자 위치) 
+
+forward_list
+단일연결리스트 객체 저장함, 역방향 순회 불가함, const, non const 순방향 반복자만 얻을수 있고 감소연산 불가함.
+size메서드가 없지만 std::distance(begin,end)메서드를 이용하여 원소 개수를 알수 있다.
+그리고 순방향 반복자를둘이상 증가시키고 싶을때는 std::advance(반복자, 증가시킬 정수값);를 이용하면 편리하다.
+얘는 전부 순방향뿐이라서 splice_after, insert_after만을 제공한다. 
+첫번째 원소 위치를 예를 들어 삽입을 하고싶다면 컨테이너.before_begin을 하거나 cbefore_begin을 하게되면 해당 첫 마지막인덱스의 옆부분(즉 끝부분)을 가리킨다. 그럼 거기다가 작업을 하는것임.
+
+실험결과 
+splice_after(시작위치 반복자, 해당위치 + 1로 가는 반복자, 끝반복자)를 통하자. 
+
+반복자 직접정의 하기.....                                                                                                                                                                                                                                                                                                                                                                                            
+이건 나중에 하자 너무어려움 ;; 
+
+
+
+
+
+
+
+
+
