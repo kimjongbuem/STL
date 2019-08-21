@@ -81,6 +81,8 @@ splice_after(시작위치 반복자, 해당위치 + 1로 가는 반복자, 끝반복자)를 통하자.
 반복자 직접정의 하기.....                                                                                                                                                                                                                                                                                                                                                                                            
 이건 나중에 하자 너무어려움 ;; 
 
+front_inserter , deque, copy, sort, getline, cout.width 까지 한번 써보았다.
+
 
 
 
