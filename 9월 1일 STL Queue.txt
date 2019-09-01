@@ -20,3 +20,37 @@ increment 함수의 경우 해당 큐 자료구조가 비어있지 않다면? 맨앞의 고객을 가져와서
 마트 개점시간 중에 이용하는 고객들을 체크하기 위한 랜덤값까지 설정함.
 
 이런식으로 해당 코드가 구성되어있음.
+
+min_element(begin, end) :  find smallest element, using operator< 내용을봐서 operator < 함수가 정의 되어서 사용한다는것.
+
+template<class _FwdIt>
+	_NODISCARD constexpr _FwdIt min_element(_FwdIt _First, _FwdIt _Last)
+	{	// find smallest element, using operator<
+	return (_STD min_element(_First, _Last, less<>()));
+}
+
+one of the standard attributes : nodiscard
+
+컴파일러에게 여러 힌트를 줄 수 있는 속성이 정식 도입됨
+흐름, 경고, 변경, 제거 등등의 특정 동작을 수행한다.
+내가 알아 본것은 min_element를 들어가보니
+_NODISCARD <=  #define _NODISCARD [[nodiscard]] 
+이러한 문장구성으로 되어있음.
+이 속성은 컴파일러에게 값이 버려질 경우 컴파일 경고를 내달라는 힌트를 준다.
+즉 이 값은 분명히 사용되어야 하니 그렇지 않을 경우 경고를 내달라는 뜻
+함수가 [[nodiscard]]로 선언되거나, 함수가 nodiscard로 선언된 열거형이나 클래스를 값으로 반환할 경우 컴파일러는 컴파일 경고
+단 , reference의 경우는 값이 반환되었다고 판단 하기에 컴파일 경고 x  
+
+constexpr를 알아보자
+먼저 constexpr은 c++11 도입 후 개선
+기존의 const와 다른점은 const의 경우 const로 지정한 변수의 값 수정시 무조건 컴파일 에러임
+근데 constexptr도 에러를 발생시키지만 컴파일 타임에 오류를 발생시킨다
+뭔말인가 하면, const는 런타임에 오류 확인시 constexpr은 컴파일을 할 때 오류를 확인 한다.- 초기화시점
+재귀가능, virtual 키워드 불가
+
+그럼 런타임과 컴파일은 뭐냐?
+sw 개발의 서로 다른 두 계층의 차이를 설명하기 위한 용어
+프로그램을 생성하기 위해 개발자는 소스코드 -> 컴파일(기계어 코드 변환 하는 편집 작업) -> 실행
+이러한 응용프로그램이 동작되어지는 때를 런타임이라고 부른다(즉 실행 직후) - 응용프로그램 돌아가는데 ㅅㅂ 버근가?
+그니까 우리는 어떤 오류발생시 컴파일 에러를 알도록 유도해야 한다. 그것이 프로그래머의 첫걸음이다.
+
