@@ -1,0 +1,22 @@
+9 / 1
+오늘의 내용은 Queue container 임
+queue<T> 컨테이너에서는 첫 번째와 마지막 원소만 접근 가능하다... ㅠ?
+새 원소는 큐의 뒤에서만 추가 가능하고 원소제거는 앞에만 가능하다 (FIFO 구조)
+pop, size, push, front, back 기본 함수이며 deque 컨테이너 래핑하지만 다른 컨테이너 지원가능(스택과 동일)
+
+큐 연산 함수
+front, back, push, push_back, pop, size, empty, emplace, swap, operator=
+
+큐예제 STLQueue.cpp 참고
+
+일단 설명을 하면 
+customer 클래스를 정의하고 이 customer 클래스는 서비스 시간을 가진다.
+그리고 checkOut이라는 클래스를 정의하는데 얘는 queue 자료구조로 customer 클래스를 저장한다.
+그리고 그 큐 자료구조를 이용하는 여러 함수들 add, glength, increment를 정의한다. 
+increment 함수의 경우 해당 큐 자료구조가 비어있지 않다면? 맨앞의 고객을 가져와서(큐) 서비스시간을 감소후 
+이 서비스 시간이 0이면 없애는 그런 함수임.
+
+그리고 새 고객이 온다는 가정하에 시간간격을 주기위한 랜덤값, 마트 개점전 기다리는 고객 랜덤값,
+마트 개점시간 중에 이용하는 고객들을 체크하기 위한 랜덤값까지 설정함.
+
+이런식으로 해당 코드가 구성되어있음.
