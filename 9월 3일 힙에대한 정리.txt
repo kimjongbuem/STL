@@ -36,8 +36,23 @@ make_heap(begin(numbers),end(numbers), default = less<>); // 45, 8 .. 1 vector �
 메이크 힙의 경우 접근가능한 부분이 전부... 원소순서가 자동관리는 안됨.
 
 힙 연산)))
+얘를 들어서 해당 벡터 자료구조에 push_back을 하여 데이터를 추가했을시 힙 배열을 적적하게 유지ㅣ하기 위한 push_heap(begin, end)를 호출!
+push_heap(begin(numbers),end(numbers), default = less<>);
+<< 맨끝 입력받음..
+ex)	words.push_back(word);
+		push_heap(begin(words), end(words));
 
+모든 힙연산이 원소전체가 내림차순으로 정렬되지 않을수 있다.
+원소삭제시 make_heap -> pop_heap(begin(numbers),end(numbers), default = less<>); -> 해당자료구조.pop_back( ); // 맨 뒤의 원소가 삭제할 데이터가 됨. 
 
+힙검사)
+is_heap(begin(numbers),end(numbers), default = less<>) return bool val => 해당 자료구조가 힙인가?
+특정범위 힙검사
+-> auto iter = is_heap_until 힙이 아닌* 원소의 첫번째 위치를 반환한다.
+만약 pop_heap을 호출한후 마지막원소만 힙 원소가 아니니 마지막원소반환됨(반복자...)
 
+힙정렬)
+sort_heap((begin(numbers), end(numbers), defalut= less<>());
+최대힙/최소힙 - > 정렬된 힙(최소힙/최대힙 - 완벽정리) 
 
-
+priority 처럼 복제 안해도됨...
