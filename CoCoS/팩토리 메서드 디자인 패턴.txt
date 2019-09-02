@@ -1,0 +1,40 @@
+c++ factory method pattern 
+
+팩토리 메서드 패턴
+
+부모클래스에서 자식 클래스가 어떤 객체를 생성할지 결정하도록 하는 디자인 패턴이다.
+예제)
+부) car <-> 자)sedan, suv
+
+static 메서드의 활용...
+
+Car 
+static Car* makeCar(int idx);
+virtual void info( ) = 0;
+----------------------------
+sedan : public car /// suv : public car
+void info ( ) { }
+----------------------------
+
+Car* Car::makeCar(int idx){
+	if(idx == SEDAN) return new Sedan( );
+	else if(idx == SUV)return new Suv( );
+}
+index 콘솔 입력받구~
+data.push_back(Car::makeCar(index));
+이런식.
+---------------------------------------------------------
+한글 / 엑셀 프로그램시 각각의 파일생성 해야할때
+인터페이스는 생성함수만 제공하여 객체 생성의 유연성을 확장시킬 수도 있다****
+생성(){
+	return 문자생성
+}
+virtual 문자생성() = 0 ; // 상속받아서 쓰자.
+
+만약 한글 /엑셀 / 기존의 다른 문서작업 프로그램 추가시 계속 클래스 추가 귀찬하...
+템플릿 클래스를 통한 문서생성을 해주자~
+
+interface - 생성 , virtual 문서생성
+
+template<class T>
+...... 문서생성 return new T;

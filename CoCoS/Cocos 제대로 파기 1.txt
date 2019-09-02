@@ -1,0 +1,36 @@
+코코스 책을 읽고 블러그를 보면서 1...
+objective -C 기반이라 애플쪽 부분
+
+객체생성시 2개방법
+1. 생성자 
+생성자(세팅값) -> bool init( ) : 이함수에 로직관련 코드넣기.
+즉 기본값 세팅후 init메서드로 true / false 체크
+Myclass* myclass = new MyClass( );
+if(myclass->init ( )){
+	//객체 인스턴스 성공
+}else error;
+
+2. 정적 멤버 함수인 create 사용
+두번째 단계 생성자의 구현부와 해당 객체를 auto-release 처리하는 코드를 포함한다.(디자인 패턴 팩토리 메서드 방식)
+/*
+	디자인 패턴 팩토리 메서드 // 관련 디자인패턴 txt참고
+/*
+
+Objective-C의 메모리 관리 시스템에는 retain count라는 개념이 존재한다.
+객체가 최초 생성되면 retain count가 1이 됨 이 retain count가 0이 되면 객체에 할당된 메모리가 해제됨.(프로그래머의 관리)
+/*
+	Objective-C 메모리관리 	
+*/
+싱글턴 패턴이 적용된 클래스를 제외한 모든 코코스 클래스는 정적 멤버함수 create를 갖음.
+auto release 처리를ㄹ 하기 때문에 일정 시간 뒤에 레퍼런스 카운트가 1만큼 감소한다. 하지만 addChild 함수가 매개변수로 받은 객체의 reference count를 다시 1만큼 증가
+
+코코스 투디 클래스의 객체를 생성하는 두가지방법중 정적멤버함수인 create 권장.
+
+
+이름규칙 //
+동사 + 명사 , 동사 + 전치사 + 명사 , on + 동사(enter, action) + callback 
+콜백함수의 경우 cc.. moved이런식으로 아직 호환성문제로 수정이 안된상태니 유의하자. 
+
+setter/getter 함수
+setProperty( ) getProperty( ) , isProperty( )
+
