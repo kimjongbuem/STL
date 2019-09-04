@@ -1,0 +1,54 @@
+RAII는 무엇인가?
+C++에서 자주 쓰이는 이디엄으로 자원의 안전한 사용을 위해 객체가 쓰이는 스코프를 벗어나면 
+자원을 해제해주는 기법(파괴)이다. Heap에 할당된 자원은 명ㅅ적으로 해제하지 않으면 해제되지 않지만
+스택에 할당된 자원은 자신의 범위가 끝나면 메모리해제, 소멸자가 불린다는 원리를 이용한다.
+
+스마트 포인터를 안쓰고 new
+-> 해제전 입셉션 // 딜리트 못함...ㅠㅠㅠㅠ
+스마트 포인터는 자신이 들고있는 메모리를 해제해준다.
+
+
+void unsafeFunction() {
+  Resource* resource = new Resource();
+
+  /* Do something with resource */
+
+  thisFunctionCanThrowException();
+
+  /* Do something else with resource */
+
+  delete resource;
+}
+
+void unmaintanableFunction() {
+  Resource* resource = nullptr;
+  try {
+    resource = new Resource();
+
+    /* Do something with resource */
+
+    thisFunctionCanThrowException();
+
+    /* Do something else with resource */
+
+    delete resource;
+  catch(std::exception& e) {
+    delete resource;
+    throw e;
+  }
+}
+
+void safeFunction() {
+  std::unique_ptr<Resource> resource(new Resource());
+
+  /* Do something with resource */
+
+  thisFunctionCanThrowException();
+
+  /* Do something else with resource */
+}
+
+단순히 heap 메모리만을 말하는 것이 아니다.
+ heap 메모리 이외에도 파일이나 db와 같은 것들도 전부 RAII를 이용해 안전하게 사용할 수 있다.
+여기에 더 나아가서 특정 scope를 벗어나면 반드시 실행돼야 하는 코드들도 RAII를 이용해 처리할 수 있다.
+ 즉, 다른 언어에서 finally에 해당하는 구문을 RAII를 이용해서 처리할 수 있다.
