@@ -1,0 +1,43 @@
+맵컨테이너 - 연관 컨테이너
+객체를 객체와 연관된 키 값으로 위치를 정한다. 키는 기본타입, 클래스타입이 가능하다.
+연관컨테이너에서 객체의 위치는 컨테이너에 지정한 키에 따라 결정된다.
+맵 컨테이너는 4가지. 각 컨테이너는 클래스 템플릿으로 정의되어 있다. 모든 map 컨테이너는 키/값 쌍을 저장한다.
+T 객체와 객체와 연관된 키 K를 캡슐화한 pair<const K, T>타입 객체를 map에 원소에 저장하는 방삭이다.
+
+특징)
+
+map 헤더
+1. Map<K,T> 컨테이너는 키/객체 쌍을 캡슐화한 pair<const K, T>타입을 원소로 저장한다. 키 K , 객체 = T 
+키는 반드시 유일해야하며, 중복 키 허용을 불허한다.(다시말해 키값이 다르면 중복 객체를 저장가능하다.), 정렬(less<T> default)
+
+2. multimap<K,T> 정렬, 중복키허용가능(map과 다른점이며, pair<const K, T> 원소를 두 개 이상 저장 가능함
+
+unordered_map 헤더 
+3. unordered_map<K,T> 컨테이너는 pair<const K, T> 객체를 직접 키 값으로 지적접 정렬안함. 원소는 키 값으로 생성된 해시 값을 이용해 위치가 정해진다. (해시 값은 해싱과정을 통해
+생성된 정수값이다) ,중복키 불가.
+
+4. unordered_multimap<K,T> 해시값 정렬, 중복키 허용
+
+맵 컨테이너 사용하기 ( 맵은 균형이진트리 로 저장된다 ) 
+map<string, size_t> mapTest;
+map<K,T>의 각 원소는 객체와 키를 캡슐화한 pair<const K, T> 타입 객체다 키는 const K이므로 수정이 불가하다. pair<T1,T2> 클래스 템플릿은 utilty 헤더에 정의됨.
+초기화방법 : {{"name", 25}}; or {make_pair("Ann",25)}; , {begin, end}
+
+이동생성자와 복사생성자 정의됨.
+
+맵에 원소 삽입하기....
+insert)))
+people.insert({"name",12}); // 인수로 초기화리스트 작성.
+auto pr = make_pair("Fred", 22);
+auto ret_pr = map.inset(pr);
+cout<<ret_pr.first->first," ", ret_pr.first->second<<" "<< boolalpha<<ret_pr.second<< '\n'; // Fred 22 true 	
+좋은위치를 제공하면 삽입이 더빠르다 (예를 들어서 해당 위치를 가리키는 반복자를 매개변수로 넣어주면 해당 위치를 힌트로 삽입을 진행한다)
+first는 삽입된 객체의 원소또는 실패한 객체의 원소를 가리키는 반복자임. second는 성공이냐 실패냐? boolean (insert)
+count함수는 원소가 이미 있는지 확인할수 없어도 힌트를 사용하고싶다... 맵에 해당 키를 갖고 있는 원소의 개수를 반환한다(0 or 1)을 반환
+if(people.count("lan")) people.insert(ret_pr.first, make_pair("lan",38));
+map 컨테이너의 반복자는 양방향이므로 증가하거나 감소할수 있다. 값을 더하거나 뺴는건 불가하다. -> advance(iter,num);
+
+인수 표현식에서 생성되는 initializer_list<T> 객체는 컴파일러가 이 표현식이 insert 함수 매개변수의 타입이라는 것을 알기때문임. 
+initalizer_list<pair< const string,size_t>> init {{"bert",12}, {"Ellen",45"}}; // 첫번째 매개변수는 무조건 const
+people.insert(init); 
+
