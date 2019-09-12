@@ -1,0 +1,73 @@
+pair, tuple 객체 사용하기
+
+map과 상관없이 pair를 쓰려면 utility 헤더를 추가ㄱㄱ
+tuple 템플릿은 pair템플릿을 일반화 한것으로 타입이 다른 객체를 몇개라도 캡슐화한 튜플 템플릿 인스턴스를 정의가능하다.
+튜플 인스턴스의 타입인수는 필요한 만큼 가질 수 있다 tuple 헤더 정의...
+
+pair 연산)
+pair 생성자가 우측값 참조를 제공하기에 unique_ptr<T> 타입이 올수 있당,
+make_pair<T1, T2>()함수 템플릿은 pair 객체를 생성하고 반환하는 헬퍼함수이다.
+
+pair 생성자는 first, second멤버를 내부에서 생성해 pair<T1, T2>객체를 생성한다. 해당 생성자에 대한 인수는 pair생성자에 tuple<>인수로 전달된다.
+pair<NAME, NAME> couple {std::piecewise_construct, std::forward_as_tuple("jack","jones"), std::forward_as_tuple("jill","smith"));
+pair생성자의 첫번째 인수는 유틸리티 헤더에 정의된 piecewise_construct 타입의 인스턴스인데 이타입은 빈타입으로 태그, 마커로 사용한다.
+여기서 이 인수는 pair생성자 호출과 나머지 두 투플의 생성자 호출을 구분하기 위해 사용한것. 
+두 투플 인수는 pair의 first, second 객체 생성에 사용할 인수를 지정한것이다. forward_as_tuple함수 템플릿은 인수에 대한 참조로 투플을 생성해서 함수에 전달함.
+타입의 복제와 이동연산을 지원하지 않을때 해당 pair객체를 생성할 수 있는 유일한 생성자다.
+
+인수가 임시객체라면 forward_asV_tuple은 우측값 참조로 투플을 생성한다.
+a = 1, b= 2 ; const auto& c = std::forward_as_tuple(a,b) ; / tuple<int&,int&> 좌측값 참조 
+ const auto& c = std::forward_as_tuple(1,2) ; / tuple<int&&,int&&> 우측값 참조
+
+연산자비교(bool)
+std::pair<string,string> new_pair;
+new_pair.first = "his"; new_pair.second = "hers";
+if(new_pair == std::pair<string,string>{"his","hers"}) cout<<"equality!"; // != 두 객체가 하나라도 다를 때 true;
+< 연산시 first 비교, 후 같다면 second비교 
+pair obj.swap(pair other obj);
+
+투플 연산
+make_tuple( )헬퍼 함수를 사용한다.
+auto tupleD = std::make_tuple(Name("peter","Piper"},42,string{"165-488-848"}};// 인수타입 Name int string
+
+투플 객체의 생성자는 모든옵션을제공한다. 기본초기화, 복사생성자, 암묵적변환, tuple = pair 복사생성자.(이 때는 원소 2개)
+
+pair에서 객체의 개수는 고정화되어 있으니 first, second로지정
+tuple에서는 객체의 개수가 고정화가 안되어 있으니 get<int>(tuple)을 통하여 해당 객체의 타입을 결정한다.
+my tuple = make_tuple(Name{"Piter","piter"}, 42, string{"2qew"});
+cout<<get<0>(mytuple); // Name데이터 string.
+다만 tuple에 해당 타입의 원소가 하나만 있다면 get<>( )에 타입을 지정해 tuple의 원소를 얻을수 있다
+get<Name> get<int> 이런식으로 다만 해당 튜플에 넣은 템플릿 타입있는 원소가 하나여야한다.
+
+전역함수 템플릿 tie< >( )는 tuple의 원소에 접근하는 또다른 방식을 제공한다.
+tuple에 있는 원소의 값을 tie< >()로 함께 묶은 좌측값에 전송가능하다.
+auto my_tuple = std::make_tuple(Name{"piter","ppp"}, 42,string{"fgdf});
+Name name{}; int age{} string p{};
+std::tie(Name,age,p) = my_tuple; // 원소의 값들 할당
+std::tie(Name,std::ignore,p); // 이런식으로 값을 넣고 싶지 않은부분 무시.
+
+
+
+pair<map<int, int>::iterator, bool > pr;
+
+pr = m.insert(pair<int, int>(10, 30));
+    if (true == pr.second)
+        cout << "key : " << pr.first->first << ", value : " << pr.first->second << " 저장 완료!" << endl;
+    else
+        cout << "key 10가 이미 m에 있습니다." << endl;
+
+    for (iter = m.begin(); iter != m.end(); ++iter)
+        cout << "(" << iter->first << "," << iter->second << ")" << " ";
+    cout << endl;
+
+    // insert 결과 실패 (중복 key 삽입)
+    pr = m.insert(pair<int, int>(10, 40));
+    if (true == pr.second)
+        cout << "key : " << pr.first->first << ", value : " << pr.first->second << " 저장 완료!" << endl;
+    else
+        cout << "key 10가 이미 m에 있습니다." << endl;
+
+
+출처: https://hyeonstorage.tistory.com/329 [개발이 하고 싶어요]
+
+tuple, pair를 함께 사용) tupleAndPair.cpp참고
