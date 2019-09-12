@@ -1,0 +1,48 @@
+multimap 컨테이너 사용하기
+멀티맵 컨테이너는 map과 마찬가지로 키/값 쌍으로 정렬되지만 중복 키를 허용한다는게 포인트!
+
+multimap.count(중복키값), map과 관련된 생성자, 복사생성자, 대입연산자, emplace, emplace_hint(모두 삽입된원소를 가리키는 반복자 반환, hint의 경우 첫번째 인수가 가리키는위치 앞또는 이와 가장 가까운 위치), insert
+중복키가 들어오면 들어간 중복키 앞에 삽입된다. 삽입시 정렬기준을 따른다(디폴트 less<>), 리스트 원소삽입또한 가능.
+
+multimap의 find함수
+
+multimap<string,int> p = {"data",12}.....;
+string name ="data";
+auto iter = p.find(name);
+if(iter != end(p)) { iter->first, iter->second 출력 }
+
+그런데 멀티맵의 경우 중복키를 가질확률이 있으니 해당 키에 대응하는 모든 원소에 접근하는게 보통이다.
+equal_range( ) 함수 멤버를 써보자
+
+auto pr = people.equal_range("data");
+if(pr.first != end(p)){
+	for(auto iter = pr.first; iter!=pr.second;++iter){
+		cout<<iter->first<<"is "<<iter->second<<endl;
+	}
+}
+
+또는
+
+auto iter1 = p.lower_bound("data");
+auto iter2 = p.upper_bound("data");
+
+if(iter1 != end(p){
+	for(auto iter =iter1; iter!=iter2;iter++){
+		iter->first << iter->second;
+	}
+}
+
+count써보기
+
+string key{"data"};
+auto n = distance(p.lower_bound(key), p.upper_bound(key)); // 키와 일치하는 원소의 개수구하기
+
+erase써보기
+세가지버전
+
+1버전 : 원소를 가리키는 반복자를 삭제할 원소로 받고 이버전은 아무것도 반환 x
+2버전 키를 인수로 받아서 해당 키를 갖는 원소 전부 삭제 이버전은 제거한 원소의 개수 반환
+3버전 삭제할 원소의 범위를 두 반복자로 지정한다. 제거한 마지막원소의 다음 원소를 가리키는 반복자반환함.
+
+멀티맵 실습)
+
