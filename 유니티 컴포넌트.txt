@@ -32,3 +32,12 @@ A has B
 메시지를 오브젝트에게 모두뿌리고 내이야기면 자신의 기능수행한다.
 start, update 메시지...
 start 메시지 뿌리고 
+
+class character
+hpComponent, attactComponent
+
+
+class User : character
+skill component
+
+class Monster : character

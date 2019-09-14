@@ -1,0 +1,23 @@
+비교함수 바꾸기)
+해당 맵, 멀티맵의 비교 함수를 바꾸는 두가지 이유가 있다.
+상등관계에서 true를 반환하면안된다(<=, >=)
+이유는 맵과 멀티맵 컨테이너는 키가 같은지를 판단하기 위해 동등관계를 이용한다.
+!(k1 < k2) && !(k2 < k1) // 만약 <= 라면 ??? 
+
+greater<T>객체
+
+operater> 정의가 되어있어야함
+
+ex) map<Name, size_t, greater<Name>> p;
+
+원소를 비교하는 함수 객체정의.
+// 포인터가 가리키는 값의 비교필요
+class Key_Compare{
+public:
+	bool operator(const unique_ptr<string>& p1, const unique_ptr<string>& p2) const{
+		return *p1 <*p2;
+	}
+
+}
+
+이제 스마트 포인터를 쓰는 객체 map에 비교함수를 추가한다. map<unique_ptr<string>,string,Key_Compare> map1;
