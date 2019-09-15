@@ -1,0 +1,83 @@
+unordered_map  키/값 쌍으로 된 원소를 유일 키로 저장한다. 근데 노 정렬
+원소의 위치는 키에 대한 해시 값을 사옹해서 정해지니 키의 타입을 지원하는 해시 함수가 필요하다.
+직접 정의한 클래스 타입의 객체를 키로 사용한다면, 이 객체를 위한 해시함수를 구현하는 함수객체를 구현해야한다.
+
+hash<T> 특수화로 지원되는 타입의 객체가 키라면 컨테이너는 키에 대한 해시 값을 생성하는 데 이 특수화를 사용가능하다.
+키를 이용하면 검색안해도 비순차에 있는 객체에 접근할수 있으니 원소를 순차 맵 컨테이너 보다 더빠르다.(왜냐 비순차 맵에서 원소범위 반복하면 원래 순차맵보다 느림)
+
+즉 어떤 컨테이너를 이용할지는 원소의 접근방식에 달려있다.
+
+일반적으로 해시테이블에 저장되고 테이블에 저장되는 항목을 버킷이라고 한다. 버킷에는 원소를 여러개 담을수 있다. 
+해시값에 따라 버킷을 선택하게 되는데 이는 해시 값의 범위가 버킷개수보다 크기때문. 두 해시값 다른데 버킷이 같은경우, 키가 다른데 해시값이 같은경우 컬리젼
+
+원소를 저장하는 방식에 영향을 주는 요소?
+컨테이너에 있는 버킷의 개수, 로드팩터(버킷의 저장된 평균 개수), 로드팩터 상한성 => 만약 해당 최댓값에 도달하면 더 많은 버킷을 할당해야 하니 메모리공간을 늘이고 이과정은 재해싱과정을 거친다.
+
+특정 순간에 버킷에 있는 원소의 최대개수와 최대 로즈팩터는 다르다.
+상등관계를 위해 키를 비교할수 있어야한다. 컨테이너에 이미 같은 키가 있을 때 둘 이상의 원소가 담긴 버킷에서 특정원소를 식별하고 결정할수 있으려면 키비교가 필요함.
+기본적으로 functional 헤더에 정의된 equal_to<k> 템플릿의 인스턴스를 사용 할 것.
+즉 동등관계를 이용하는 map 컨테이너와 다르니 operator()==를 구현해야한다.
+
+즉 hash<T>, operator==연산자를 사용해 키를 비교가능하면 map 컨테이너 처럼간단하게 생성가능하다.
+중요한건 초기화방식은 비슷한데 버킷의 개수를 지정가능하다는것이다. 물론 반복자도 가능하며 버킷개수 지정가능하다.
+std::unordered_map<string, size_t> people {{"Jan",44}, 10}; // 버킷 10  
+
+class Name{
+string first, second;
+size_t hash() const{return std::hash<string>(first+second);}
+bool operator==(const Name& name) const {return first==name.first && second == name.second;}
+
+class Hash_Name{
+	size_t operator( )(const Name& name) const {return name.hash();}	
+}
+
+std::unordered_map<Name, size_t,Hash_Name> people {{"Jan",44}, 10, Hash_Name( )}; // 버킷 10, 키에 사용할 해쉬함수
+
+만약의 Name의 operaotr를 쓰고싶지 않고 다른 클래스 operaotr==를 정의 한애를 쓰고싶다?
+<= {초기화, 버킷개수, 해시함수객체, 비교함수객체}
+
+버킷개수 조정하기
+rehash( ) 최대 로즈 팩터를 초과하는게 아니면 재할당.
+buck_count() 버킷개수반환
+max_load_facotr( ) 로드 팩터 최대값 반환-> get/set
+load_factor 현재의 로드팩터 반환
+reserve(cnt) 최대 로드 팩터이내에서 로드 팩터를 관리하면서 지정된 개수만 큼 원소를 수용함.
+
+원소 삽입하기
+unordered_map의 컨테이너 insert 멤버는 map과 같은 기능을 제공한다.
+1) insert(iterator, data); 
+2) insert{init_list}
+3) insert{begin_iter, end_iter}
+
+auto pr = emplace // pair<iterator,bool> 컨테이너 내부에 객체를 바로 생성한다.
+auto iter = emplace_hint // iterator 
+
+이동, 복제 연산 정의됨.
+
+원소 접근))
+
+people["Jan"] == 2; ++연산도 가능해요 ㅋ
+find, equal_range 멤버도 동작이 같다.
+
+원소 삭제))
+
+erase함수, clear, empty
+
+버킷접근))
+
+unordered_map 버킷에 접근할 수 있고, 버킷 안의 원소에도 접근할 수도 있다.
+auto iter = people.begin(1); // 두번째 버킷에 대한 반복자.
+
+int idx = 1;
+cout<<"the element bucket <<index<<endl;
+for(auto iter = people.begin(idx);iter!=people.end(idx);++iter) cout<<iter->first<<"is " <<iter->second<<endl;
+// 해당 버킷리스트 반환 //
+bucket_size() 해당 버킷에 있는 원소의 개수 반환.
+bucket(key) 인수로 전달한 키에 해당하는 원소가 담긴 버킷의 인덱스를 반환한다.
+//
+string key = "key";
+if(people.find(key) != end(people) 
+	people.bucket_size(people.bucket(key));
+
+
+
