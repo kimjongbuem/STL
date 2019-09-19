@@ -11,6 +11,8 @@
 using namespace std;
 using course = string;
 using student_name = string;
+using Address = string;
+using Phone = string;
 
 /*3 키보드에서 계산대 개수를 입력받아 슈퍼마켓을 시뮬레이션하는 프로그램.
 	각 계산대는 map 컨테이너를 원소로 표현, 계산대 아이디를 키로사용, 계산대의 대기열은 키와 연관된 객체로 사용하라
@@ -18,7 +20,19 @@ using student_name = string;
 	각 계산대의 최대 대기열길이와 평균 대기시간을 출력하라.
 
 */
-
+class Name {
+	string name;
+public:
+	Name(string name) : name(name) {};
+	bool operator==(const Name& names) const { return name == names.name; }
+	string getName() const { return name; }
+};
+class NameHash {
+	size_t operator()(const Name& name) const {
+		return hash<string>()(name.getName());
+	}
+};
+using Person = tuple<Name, Address, Phone>;
 void histogram(const vector<int>& v, int min)
 {
 	string bar(60, '*');
@@ -60,6 +74,9 @@ public:
 	bool operator<(const Counter& other) const { return getLength() < other.getLength(); }
 	bool operator>(const Counter& other) const { return getLength() > other.getLength(); }
 };
+//less<>::operator()() const {
+//
+//}
 void showCoureAndSchoolList(const map<course,student_name ,less<>>& map, const course key) {
 	int count = map.count(key);
 	auto finding = map.find(key);
@@ -226,5 +243,36 @@ int main() {
 	//cout << "\n서비스 시간 막대 그래프\n";
 	//histogram(service_times, service_t_min);
 	//cout << "오늘 총 고객 수 : " << accumulate(begin(service_times), end(service_times), 0) << endl;
+	/*
+	4....
+		이름 주소 전화번호를 저장하는 Person객체에 대한 클래스를 정의해라 이름을 키로 사용해서 Person객체를 저장하는 용도
+		unordered_multimap 컨테이너를 사용하라 주소, 전화번호, 이름 검색하는 기능과 아ㅣ름을 오름차순으로 Person객체를 모두 출력하는 기능
+	*/
+
+	//unordered_multimap<Name, Person,NameHash>persons{8, NameHash()}; // name address, phone
+	unordered_multimap<string, Person>persons;// { 8, NameHash() };
+	while (true) {
+		int choice;
+		string name, address, phone;
+		cout << "1. 사람 추가하기 2. 추가한 사람들 전체 보기 3. 종료  ";
+		cin >> choice;
+		if (choice == 1) {
+			cout << "이름, 주소 , 폰번호 입력해주세요! : ";
+			cin >> ws >> name >> address >> phone;
+			/*if (persons.count(name)) persons.insert(make_tuple(name, address, phone));
+			else*/ persons.emplace(name, make_tuple(name, address, phone));
+		}
+		else if (choice == 2) {
+			auto func = [&persons]() {
+				for (auto iter = begin(persons); iter != end(persons); iter++) {
+					cout << "name : " << iter->first << " address: " << get<1>(iter->second) << " phone" << get<2>(iter->second) << endl;
+				}
+			};
+			func();
+		}
+		else if (choice == 3) break;
+	}
+	
+	
 	system("pause");
 }
