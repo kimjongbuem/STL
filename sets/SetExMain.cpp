@@ -75,4 +75,5 @@ int main() {
 	// 각 코스에 참여하는 학생들을 출력
 	std::for_each(std::begin(courses), std::end(courses), List_Course());
 	std::cout << std::endl;
+	system("pause");
 }

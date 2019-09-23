@@ -8,8 +8,8 @@ private:
 	std::string second{};
 public:
 	Student(const std::string& name1, const std::string& name2) :first(name1), second(name2) {};
-	Student(Student& student) : first((student.first)), second((student.second)) {}
-	Student(Student&& student): first(std::move(student.first)), second(std::move(student.second)) {}
+	Student(const Student& student) : first(student.first), second(student.second) {}
+	Student(const Student&& student): first(std::move(student.first)), second(std::move(student.second)) {}
 	Student() {}
 	bool operator<(const Student& student) const {
 		return second < student.second || (second == student.second && first < student.first);
