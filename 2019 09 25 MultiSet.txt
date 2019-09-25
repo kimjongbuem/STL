@@ -1,1 +1,46 @@
-d
+set<T>와 같지만 중복원소를 저장가능하다. 즉 원소가 항상 삽입된다.
+
+std:::mulitset<string, std::greater<string>> words{{"dog","cat"}, std::grater<string>()} ; 비교자는 상등관계에 대해 true를 반환하면 안된다. // 동등관계..
+
+동작 함수 멤버)
+
+insert() : 항상 성공. 원소 하나 삽입시 이전에 삽입된 원소들을 모두 가리키는 반복자를 반환한다. (emplace, emplacehint 도 마찬가지)
+find() : 인수와 일치하는 첫 번째 원소를 가리키는 반복자를 반환한다. 일치하는 원소가 없으면 컨테이너의 끝 반복자를 반환한다.
+equal_range( ) : 인수와 일치하는 원소 범위를 정의한 두 반복자를 담은 pair 객체를 반환한다. 
+인수와 일치하는 원소가 없으면 pair의 첫번째 멤버는 컨테이너의 끝 반복자가된다. pair의 두번째 멤버는 인수가 일치하는 원소의 마지막 반복자 (없으면 끝반복자)
+
+lower_bound( )는 인수와 일치하는 첫 번째 멤버를 가리키는 반복자를 반환한다. 일치하는 원소가 없으면 끝 반복자를 반환한. => upper_bound
+count 인수와 일치하는 원소들의 개수를 반환함.
+
+std::istringstream : 문자열 파싱 스트림
+
+set이나 multiset 컨테이너에 저장된 파생 클래스 객체에 포인터를 저장할땐?( 기반 클래스 타입에 대한 포인터로 지정하자)
+원소들의 배열되는 순서 고려안하면 owner_less<T> 인스턴스를 사용하면 되지만, 원소를 가져올때는 동등관계인 객체가 아니라 동일한 객체를 가리키는 포인터를 사용해야 한다는점.
+
+class Pet {
+protected:
+	string name{};
+public:
+	virtual ~Pet() {}
+	const string& get_name() const { return name; }
+
+	virtual bool operator<<(const Pet& pet) {
+		auto result = std::strcmp(typeid(*this).name, typeid(pet).name);
+		return (result < 0) || ((result == 0) && (name < pet.name));
+	}
+	friend std::ostream& operator<<(std::ostream& out, const Pet& pet);
+};
+inline std::ostream& operator<<(std::ostream& out, const Pet& pet) {
+	return out << "A " << string{ typeid(pet).name() }.erase(0, 6) << " called " << pet.name;
+}
+
+typeid 는 자료형이나 변수 또는 식을 입력받아 const type_info& 형식의 객체를 반환해 주는 연산자
+피연산자의 타입을 캡슐화한 type_info 객체를 생성.
+
+return 표현식에서 타입 이름을 비교하는것은 매우 중요하다.
+set map에 지정하는 비교는 strict weak ordering을 반드시 보장해야한다. 다른 조건과 마찬가지로 a <b true, b < a는 false가 되어야한다. 상등관계로 타입 이름을 비교하지 않음녀 반환값의 표현식에서 사용한 조건을 
+만족할 수 없었을 것이다. 
+auto result = std::strcmp(typeid(*this).name, typeid(pet).name); 
+해당 class my_type을 반환한다.(시스템마다 다름)... 그래서 타입과 이름을 비교하는 식이다.
+
+예를 들어서 Cat 객체 cat 이름 tiddles , Dog객체 dog 이름 Rover 있으면 cat <dog ( 타입) dog < cat은 이름 비교시..( 두 객체가 동시에 서로보다 작은 관계면? 문제가됨)
