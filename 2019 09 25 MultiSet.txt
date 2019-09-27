@@ -1,5 +1,9 @@
 set<T>와 같지만 중복원소를 저장가능하다. 즉 원소가 항상 삽입된다.
 
+상등 관계와 동등 관계가 이렇다. 이게 왜 STL과 관련지어서 나오냐면 같은 값을 가졌는지 판단할 때, find()류는 operator== 로 하고 std::insert()류는 operator< 로 하기 때문이다. 
+하나만 쓰지! 참 원망스럽다. 하지만 이해가 가기도 한다. 연관 컨테이너(set, multiset, map, multimap)는 정렬된 순서로 내부 데이터를 관리하는데, 이때 정렬 기준으로 operator< 를 사용한다. 
+이 연산으로 동등 관계를 파악할 수 있는데, 구태여 상등 관계를 밝히는 operator== 연산을 추가로 정의할 필요가 없고 만약 쓴다면 더욱 혼란스러울 것 같다.
+
 std:::mulitset<string, std::greater<string>> words{{"dog","cat"}, std::grater<string>()} ; 비교자는 상등관계에 대해 true를 반환하면 안된다. // 동등관계..
 
 동작 함수 멤버)
