@@ -1,0 +1,21 @@
+set 연산
+집합관련 알고리즘 솔루션
+
+합집합 연산) set_union
+vector v1, v2, result; 
+set_union(begin(v1) , end(v1),begin(v2), end(v2), back_inserter(result)) ; // 결과저장안해도됨 출력만 ,, ostream_iterator(cout, " "); 
+
+2 버전은 비교함수객체를 넣는것이다.
+set<int, greater<int>> set1 {1,2,...}; set<int, greater<int>> set2 {1,2,...}; set<int, greater<int>> result;
+set_union(begin(v1) , end(v1),begin(v2), end(v2), inserter(result, begin(result),end(result)), greater<int>( )); // set 컨테이너는 push_back이없으니 inserter 연산만 가능하다
+
+교집합연산) set_intersection
+교집합연산이며 연산방식만 다를 뿐 해당 함수와 쓰는 내용은 위와 같다.
+
+
+차집합연산) set_difference 차집합 A-B, set_symmetric_difference 대칭차집합 A - B + B - A
+
+
+include 알고리즘)
+첫번째 집합이 두번째 집합의 모든 원소를 포함시 TRUE  아니면 FALSE 반환함.\
+includes(begin, end , begin ,end ) => true/false
