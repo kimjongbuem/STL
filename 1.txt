@@ -1,0 +1,11 @@
+dudcjf9434 / 서경대305069
+
+링크-로컬 IPv6 주소:	fe80::c193:87bb:71e0:6ed6%12
+IPv4 주소:	121.139.41.65
+IPv4 DNS 서버:	1.1.1.1
+1.0.0.1
+주 DNS 접미사	kornet
+제조업체:	Realtek
+설명:	Realtek PCIe GbE Family Controller
+드라이버 버전:	9.1.410.2015
+물리적 주소(MAC):	94-DE-80-0F-D7-5C
