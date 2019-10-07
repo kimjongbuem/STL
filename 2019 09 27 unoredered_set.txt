@@ -1,0 +1,22 @@
+unordered_set<T>
+타입 T의 객체는 객체의 해시 값을 사용해 컨테이너가 정해지니 Hash<T> 함수가 반드시 있어야 한다.
+컨테이너에 중복객체를 저장할순 없다.
+원소들은 상등관계를 비교해야한다. 원소들은 해시 테이블 안에 있는 버킷에 저장된다. 즉, 해시 테이블에서 원소가 저장될 버킷은 해시 값을 기준으로 선택한다.
+
+object - > hash func -> hash table - each burket.
+<초기화 리스트, 버킷, 범위, 복제생성자 >
+std::unordered_set<string, Hash_name> things{16, hash_func() } // 버킷 16개
+
+원소 추가하기
+
+insert 함수 멤버는 인수로 전달한 원소 하나를 삽입가능하다. 삽입후 pair<iterator, bool> // 동일
+emplace, emplace_hint
+
+원소 가져오기
+find
+
+원소 삭제하기
+clear, erase
+
+버킷리스트 보여주기
+
