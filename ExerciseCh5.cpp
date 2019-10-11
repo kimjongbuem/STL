@@ -126,34 +126,64 @@ void getRandomCard(vector<Card>& cards, set<Card>& sets) {
 
 //2¹ø
 
-class HashWord {
-public:
-	size_t operator()(const string& word) {
-		return hash<string>()(word);
-	}
-};
-int main()
-{
-	cout << "Enter some text and Enter * to end: \n";
-	string text_in{};
-	getline(cin, text_in, '*');
+//class HashWord {
+//public:
+//	size_t operator()(const string& word) {
+//		return hash<string>()(word);
+//	}
+//};
+//int main()
+//{
+//	cout << "Enter some text and Enter * to end: \n";
+//	string text_in{};
+//	getline(cin, text_in, '*');
+//
+//	replace_if(begin(text_in), end(text_in), [](const char& ch) {return !isalpha(ch); }, ' ');
+//	istringstream text{ text_in };
+//	istream_iterator<string> begin(text), end;
+//	unordered_multiset<string> words;
+//	size_t max_len = 0;
+//	for_each(begin, end, [&max_len, &words](const string& word) {
+//		words.emplace(word);
+//		max_len = std::max(max_len, word.length());
+//	});
+//
+//	size_t per_line = 4;
+//	size_t count = 0;
+//
+//	for (auto iter = words.begin(); iter != words.end(); iter++) {
+//		cout << left << setw(max_len + 1) << *iter << setw(3) << right << words.count(*iter) << " ";
+//		if (++count % per_line == 0) cout << endl;
+//	}
+//	system("pause");
+//}
 
-	replace_if(begin(text_in), end(text_in), [](const char& ch) {return !isalpha(ch); }, ' ');
-	istringstream text{ text_in };
-	istream_iterator<string> begin(text), end;
-	unordered_multiset<string> words;
-	size_t max_len = 0;
-	for_each(begin, end, [&max_len, &words](const string& word) {
-		words.emplace(word);
-		max_len = std::max(max_len, word.length());
-	});
+//3¹ø
 
-	size_t per_line = 4;
-	size_t count = 0;
+//void getRandomNumber(multiset<int>& mulSet) {
+//	random_device rn;
+//	mt19937_64 rnd((rn()));;
+//	uniform_int_distribution<int> range(1, 6);
+//	int n1 = range(rnd);
+//	int n2 = range(rnd);
+//	mulSet.insert(n1 + n2);
+//}
+//
+//int main() {
+//	multiset<int> mulSet;
+//	for (int i = 0; i < 1000; i++) {
+//		getRandomNumber(mulSet);
+//	}
+//	for (auto iter = begin(mulSet); iter != end(mulSet);) {
+//		auto e = mulSet.equal_range(*iter);
+//
+//		cout << left << setw(2) << *iter << setw(3) << right << mulSet.count(*iter) << " ";
+//
+//		iter = e.second;
+//		cout << endl;
+//	}
+//		system("pause");
+//}
 
-	for (auto iter = words.begin(); iter != words.end(); iter++) {
-		cout << left << setw(max_len + 1) << *iter << setw(3) << right << words.count(*iter) << " ";
-		if (++count % per_line == 0) cout << endl;
-	}
-	system("pause");
-}
+//4¹ø
+
