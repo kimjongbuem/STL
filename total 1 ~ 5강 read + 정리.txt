@@ -1,0 +1,78 @@
+총정리내용>
+24 ~ 343
+재복습 외우기, + 까먹은것들..
+1강>>
+
+vecIns.insert(begin(vecIns), std::istream_iterator<double>(std::cin), std::istream_iterator<double>()); // ctrl + z  입력할때까지 add
+std::accummulate(begin(vecIns),end(vecIns),0.0) / vecIns.size();
+
+이동할당 연산자, 이동생성자는 반드시 noexcept 지정해야함.
+
+map, set  컨테이너에 저장하고싶다? operaotr<를 구현한 클래스여야한다.!!****
+
+반복자 카테고리 info
+모든 반복자 타입은 복제 생성자, 복제 할당 연산자, 소멸자를 가져야함, 또한 교환이 가능해야 합니다...
+반복자 카테고리는 컨테이너의 종류에 따라 달라짐. 카테고리는 알고리즘이 반복자의 기능을 결정하게 도와준다.
+알고리즘은 반복자인수의 카테고리를 두가지 방식으로 이용가능한데, 1번방식은 연산에 필요한 최소 기능 요구 조건 만족 시켰는가? 2번방시은 알고리즘은 1번 만족하에 더 효율적으로 수행하기 위해 확장 기능사용한다.
+(단 반복자를 지원하는 컨테이너)
+
+5개의 반복자 카테고리--- iterator 템플릿에 타입인수로 사용된 빈클래스. 즉 반복자 태그 클래스로 확인 가능함.
+
+1) 읽기 반복자 : 객체에 대한 읽기 권한. if iter exist , *iter is exist. 단한번만 읽을 수 있다. // 연산가능 iter1 != iter2, ==  ///<= 새반복자를 사용할 경우가 많다. (input_iterator_tag)
+
+2) 출력 반복자 : 객체에 대한 쓰기 권한. *iter = new_val . 단한번만 대입가능 ++iter, *iter <= 새반복자를 사용할 경우가 많다. (output_iterator_tag)
+
+3) 순방향 반복자 : 입력반복자와 출력 반복자의 기능에 몇번이고 쓸수 있는 기능. 
+ex) replace 알고리즘은 범위 검색하여 원소를 대체하는데 이 대체할 반복자가 원소를 덮어쓸때도 재사용이 가능해야한다. (forward_iterator_tag)
+
+4) 양방향 반복자 : 순방향 반복자와 같은 기능에 역방향이동 가능하다. --iter ! (bidrectional_iterator_tag)
+
+5) 랜덤 액세스 반복자 : 양방향 반복자와 같은 기능에 원소들이 마음대로 접근 가능기능. (random_access_iterator_tag)
+정수로 인덱스 접근한다거나 , 정수로 증가시켜서 한다거나, 반복자의 인덱스 차이 값 , 비교 가능(여기선 >, <, >= , <=)
+
+스트림 반복자. 
+스트림 - 소스 - 타깃간의 데이터를 텍스트 모드로 전송가능! 입력스트림반복자로 접근가능하고 이용가능한 객체라면 알고리즘 적용가능.
+
+표준 반복자들은 iterator 템플릿 타입을 기반 클래스로 갖고 있다.
+iterator_istream or ostream_iterator의 경우 해당 operaotr>> ,<< 가 정의되어야 사용가능하다.
+std::acuumulate( istream_iterator<double>(std::cin), istream_iterator<double>(), 0.0) ;  이런식임.
+
+
+반복자 어댑터>
+반복자 어댑터는 표준 반복자에 특별한 동작을 제공하는 클래스 템플릿임. ( 반복자 템플릿 파생 )
+
+- 역방향반복자 (reverse_iterator) :
+표준 반복자 역방향 (rend가 첫번째 원소에서 하나 더 앞, rbegin이 맨 마지막원소..)
+
+-삽입반복자 (insert_iterator)
+범위 안에 있는 원소만 접근할수 있는 표준반복자완 달리 컨테이너의 어느 위치든 새 원소들을 범위 추가가능하다.
+단 array 컨테이너와 같이 고정되어 있다면 불가하다.
+back_insertIterator는 push_back( ) 멤버 함수로 컨테이너의 끝에 새 원소를 추가한다. ( vector, list, deque)  
+front_insertIterator는 push_front( ) 멤버 함수로 컨테이너의 아펭 새 원소를 추가한다. (list, forward_list, deque ) 
+insert_iterator = > insert 멤버가 있는 ㅋㄴ테이너에 새원소를 삽입한다. 
+
+- 이동반복자 : 복제가 아닌 이동, make_move_iterator : begin, end => move_iterator
+
+반복자에 쓰이는 연산
+iteraotr 헤더에는 반복자에 쓰이는 연산을 정의한 4가지 함수 템플릿:
+
+1 . advance : 첫번째 인수로 받은 반복자를 두번째 인수로 지정한 숫자만큼 증가 시킨다(입력반복자기능)
+2. distance : 두 반복자가 지정한 범위에 있는 원소들의 개수를 반환한다. ( distance(begin, end) ) 
+3. next : 첫번 째 인수로 받은 반복자를 두번째 인수로 지정한 숫자만큼 증가시킨 반복자를 반환한다!!
+4. prev : 얘는 감소시킨 반복자 반환. 
+
+
+스마트포인터
+스마트포인터는 자유공간에 할당된 메모리의 주소만을 저장하는데 , new, delete 얘기 <= 언제 delete써야하는지 ... 자동적으로 해제되니 엉청난 강점.
+
+1) unique_ptr<T>  : T에 대한 포인터 처럼 행동하며 유일해야한다. 같은 주소를 소유할수 없다. 독점적이다. 복제가 아닌 이동을 해야하는데 이 때 std::move 함수를 사용해서 이동가능하다.
+생성함수 : make_unique_ptr<T>( ) ; . 역참조또한 가능하다. . std::make_unique_ptr<string>(6,'*');  
+reset 메서드 : 해당 객체의 주소 메모리를 nullptr 해제한다. 다만 인수를 넣으면 기존의 메모리를 버리고 인수를 메모리에 할당한다.
+release 메서드 : 해당 스마트포인터 객체가 가리키는 객체를 해제한다. <= 원본 객의 메모리를 해제하지 않아도 해당 스마트 포인터의 원시 포인터를 nullptr 설정가능하다 ( 차이점 : 반환 )
+auto name = unique_ptr<string>("names"); unique_ptr<string> new_name = name.release( ) ; // 해당 new -> new_name 객체 포인터 이동.
+swap 메서드 : uni1.swap(uni2);  
+
+
+
+2) shared_ptr<T> T에 대한 포인터처럼 행동하지만 공유한다는점이 unique_ptr과의 차이점이다. <= 소유권공유 reference_count object c 방식 인용. 만약 레퍼런스 카운트 0일때 메모리 해제됨.
+3) weak_ptr<T> shared_ptr<T> 오브젝트에서 생성해서 연결하고같은 주소를 가리킨다. 다만 STRONG COUNT는 증가되지않고 WEAK_COUNT만 증가되는데 이는 객체 공유를 하나, 순환참조를 막는 방식으로 이용한다.
