@@ -187,6 +187,46 @@ forward_list<T>
 1. 역방향 반복자 사용불가 2. 순방향만 const , non-const도 .. 3. 감소연산불가.		4. back x 오직 front만... <- splice_after, insert_after
 	
 
+3강 컨테이너 어댑터
+
+스택, 큐, 우선순위 큐 <= 해당 순차열 컨테이너를 다른 기능을 제공하기 위한 순차열 컨테이너로 정의하기 위해 래핑하는 클래스 템플릿.
+
+스택)
+이동생성자, 복제, 이동버전operator = (&, &&) 
+
+연산
+top, push, push_back, pop, size, empty, emplace, swap 
+
+큐) 스택과 구현한 버전이 같다.
+
+연산
+front, back, push, push_back, pop, size, empty, emplace, swap..
+
+uniform_int_distribution d { 범위 }, random_device r  ===> auto value = d(r);
+
+우선순위 큐)
+첫번째 템플릿 타입 : 저장할 객체 타입, 밑은 디폴트들.
+두 번째 템플릿 타입 : 원소를 저장할 때 사용할 기반 컨테이너, 세번째 템플릿 타입 : 원소의 순서를 결정하는 조건자를 정의한 함수 타입
+
+큐와 연산이 같다. 
+std::cin >> datastructure obj . eof = break .. => ctrl + z end!
+
+힙) 9월 3일 힙에 대한 정리 txt 참고.
+make_heap(begin, end , less<>=default); 
+isheap, push_heap, pop_heap ... 여러 연산.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
