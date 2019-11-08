@@ -215,6 +215,65 @@ std::cin >> datastructure obj . eof = break .. => ctrl + z end!
 make_heap(begin, end , less<>=default); 
 isheap, push_heap, pop_heap ... 여러 연산.
 
+4강 맵 컨테이너)
+
+맵 컨테이너는 연관 컨테이너라고 함.
+연관 컨테이너는 객체를 객체와 연관된 키 값으로 위치를 정한다. 
+키는 기본 타입의 값이 될수도 있고 객체도 가능함. pair<const K, T> 타입 객체를 map에 원소로 저장한다.
+
+사용자 지정 클래스는 operator < 구현이 필요하다. 왜냐하면 정렬 순서를 정해야 하기때문에..
+- 균형이진트리 구성되어 있다.
+map 클래스 타입 매개변수 4개 ( key, value, FuncObj, memory obj) : make_pair<K, V>
+
+insert method 반환값은 pair<iterator, bool> object return (current map object iterator, if it success to insert value : true eelse false)
+count = 0 or 1 return value
+
+map 원소를 내부에서 생성하기 
+auto pr = mapobj.emplace ( ); 
+auto iter = mapobj.emplace_hint(pr.first ..  
+
+삭제하기 : erase 메서드 반환값 bool, clear
+
+tuple. pair 사용법.
+forward_as_tuple, get, tie,
+
+Multimap
+
+중복키허용 , 키비교 함수 디폴트 less<T> 
+찾는 메서드 : find(obj) 반환값 end(container)이아니면 있다는거. , 중복키 range : 
+auto pr = equal_range(obj) 
+pr.first (반환값 없으면 end) = iterator ~  pr.second(마지막 중복키 장소)
+equal_range = lower_bound + upper_bound 와 같다.
+map. count(obj) => 해당 중복 키가 몇개 있는지 반환한다.
+
+그럼 비교함수를 바꿔볼까>>>
+
+정렬의 기준 change. 
+unordered는 상등관계 , ==  //  ordered는 동등관계 !(a < b) && !(b < a)
+
+greater<T> : USER CLASS DEFINE :
+bool operator<(Const Name& name) const // const, 해당 비교 객체, bool , operator< 키 포인트
+
+함수 객체 정의도 가능!
+class Compare
+bool operator( )(비교 객체 a,b 총 2개) return a < b
+
+funtional header)
+비순차 연관 컨테이너에서 사용하는 hash<k> 템플릿의 특수화 정의,
+
+hash<k> 템플릿에 정의된 함수 객체 타입은 타입 k 객체의 해시 값을 생성한다.(물론 포인터도 씹가능!)
+
+unordered_map)
+필요한거 hash func (object), operator== 정의 ( operator== 정의 안할시 default = equal_to<T> , funtional
+버킷 과 해시 값
+초기화 리스트 , 버킷개수, 키에대한 해시 함수, Equal
+
+삽입 insert 반환값 <iterator, bool> 
+삭제 erase 
+
+
+unordered_multimap)
+
 
 
 
