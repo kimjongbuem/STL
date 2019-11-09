@@ -1,0 +1,7 @@
+범위 정렬
+
+sort , copy , stable_sort(같은 원소들의 순서 유지.), partial_sort(begin, middle, end) ; middle, end : closed 
+partial_sort_copy , nth_element(begin, choice, end) // 해당 n번째 원소부분만 정렬후 구분.
+is_sorted_until : 해당 부분까지 정렬(순차적으로 접근하면서 정렬순서가 어긋나면 거기서 끝)
+
+범위 병합
