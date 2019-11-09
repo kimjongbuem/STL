@@ -275,8 +275,26 @@ unordered_map)
 unordered_multimap)
 
 
+5강 Set 자료구조.
+균형이진트리 구조. Set<T, compare>
 
+추가 insert : return pair<iterator, bool>, emplace , emplace_hint
+삭제 erase(obj), clear
+접근 : find(obj) return iterator 
 
+양방향 반복자를 가짐 : const ,reverse , iterator ...
+객체를 반드시 수정, 하나이상의 셋 컨테이너에 객체를 저장하고 싶을 때:
+스마트 포인터 shared_ptr, weak_ptr를 저장함. <= Owner_less<T> 함수 객체 타입의 인스턴스를 사용하는 것.
+다른 스마트 포인터와의 보다 작은 비교를 제공하는 스마트 포인터의 owner_before( ) 멤버 함수를 정의한다.
+해당 스마트포인터가 인수로 전달된 스마트 포인터보다 작을 때 true 아니면 false (동등관계)
+
+Multiset도 ...
+
+포인터를 파생클래스 객체에 저장하기... virtual , operator < or == , operator<< 
+
+unordered_multiset, unordered_set
+
+집합연산 union, intersecition 등등
 
 
 
