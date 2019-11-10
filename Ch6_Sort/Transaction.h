@@ -16,17 +16,17 @@ public:
 	bool operator>(const Transaction& transaction) const {
 		return account_number > transaction.account_number;
 	}
-	friend std::ostream& operator<<(std::ostream out, const Transaction& transaction);
-	friend std::istream& operator>>(std::istream in, Transaction& transaction);
+	friend std::ostream& operator<<(std::ostream& out, const Transaction& transaction);
+	friend std::istream& operator>>(std::istream& in, Transaction& transaction);
 
 	friend class Account;
 };
-std::ostream& operator<<(std::ostream out, const Transaction& transaction) {
-	out << std::right << std::setfill('0') << std::setw(5) <<
+std::ostream& operator<<(std::ostream& out, const Transaction& transaction) {
+	return out << std::right << std::setfill('0') << std::setw(5) <<
 		transaction.account_number << std::setfill(' ') << std::setw(8) << std::fixed << std::setprecision(2)
 		<< transaction.amount << (transaction.credit ? " CR" : " DR");
 }
-std::istream& operator>>(std::istream in, Transaction& transaction) {
+std::istream& operator>>(std::istream& in, Transaction& transaction) {
 	if ((in >> std::skipws >> transaction.account_number).eof())return in;
 	return in >> transaction.amount >> std::boolalpha >> transaction.credit;
 }
